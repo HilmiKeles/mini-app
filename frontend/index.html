@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestion de Tâches CRUD</title>
+    <style>
+        body { font-family: sans-serif; max-width: 600px; margin: 20px auto; }
+        .task { display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #ccc; }
+        form { margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Ma Liste de Tâches</h1>
+
+    <form id="taskForm">
+        <input type="text" id="taskTitle" placeholder="Nouvelle tâche..." required>
+        <button type="submit">Ajouter</button>
+    </form>
+
+    <div id="taskList"></div>
+
+    <script>
+        const API_URL = 'http://localhost:3000/tasks';
+
+        // Fonction pour récupérer et lister les éléments [cite: 37, 44]
+        async function fetchTasks() {
+            const res = await fetch(API_URL);
+            const tasks = await res.json();
+            const list = document.getElementById('taskList');
+            list.innerHTML = '';
+            tasks.forEach(task => {
+                list.innerHTML += `
+                    <div class="task">
+                        <span>${task.title}</span>
+                        <button onclick="deleteTask('${task._id}')">Supprimer</button>
+                    </div>`;
+            });
+        }
+
+        // Fonction pour ajouter un élément [cite: 20, 45]
+        document.getElementById('taskForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const title = document.getElementById('taskTitle').value;
+            await fetch(API_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ title })
+            });
+            document.getElementById('taskTitle').value = '';
+            fetchTasks();
+        };
+
+        // Fonction pour supprimer un élément [cite: 23, 47]
+        async function deleteTask(id) {
+            await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+            fetchTasks();
+        }
+
+        fetchTasks();
+    </script>
+</body>
+</html>
