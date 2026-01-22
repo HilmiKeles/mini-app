@@ -4,7 +4,7 @@
 Ce projet est une application web complete (Fullstack) permettant de gérer une Liste de Tâches (To-Do List). Il a ete realise dans le cadre du module Docker pour demontrer la mise en place d'une architecture conteneurisee respectant les bonnes pratiques de persistance et de developpement.
 
 ## Membres du Groupe
-- Kamba Emmanuel, Smock Morgan, Keles Hilmi
+- Kamba Emmanuel, Smock Morgan, Keles Hilmi, Abdoulaye Ba
 - DSP5O24A
 
 ## Architecture Technique
